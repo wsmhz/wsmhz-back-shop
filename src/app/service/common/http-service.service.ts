@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient,HttpHeaders,} from '@angular/common/http';
-import {CommonUtil} from '../../utils/CommonUtil';
+import {CommonUtil} from '../../utils/commonUtil';
 declare var $: any;
+declare var layer: any;
+
 @Injectable()
 export class HttpServiceService {
 
@@ -20,13 +22,24 @@ export class HttpServiceService {
       .catch(error => this.handleError(error));
   }
 
+  HttpGet(url: string ,header?: HttpHeaders) {
+    if(this.commonUtil.isNull(header)){
+      header = new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded'});
+    }
+    return this.http.get(url,{headers:header})
+      .toPromise()
+      .then(res => this.handleSuccess((res)))
+      .catch(error => this.handleError(error));
+  }
+
   private handleSuccess(result) {
-    // if (result && (result.retcode != AppConfig.responseCode.successCode)) {  //由这里统一处理请求返回数据失败的情况
-    //   this.commonUtil.toast_position(result.msg,'bottom');
-    // }
-    // if (result && (result.code === AppConfig.responseCode.needLogin)) {//为什么有-1000，又有-2 都需要登陆？
-    //   this.events.publish('needLogin');
-    // }
+    if (result && (result.status !== CommonUtil.RESPONSE_CODE.SUCCESS)) { // 由这里统一处理请求返回数据失败的情况
+      layer.msg('玩命提示中');
+    }
+    if (result && (result.code === CommonUtil.RESPONSE_CODE.NEED_LOGIN)) {
+      // this.events.publish('needLogin');
+      layer.msg('需要登陆');
+    }
     return result;
   }
 
@@ -44,9 +57,8 @@ export class HttpServiceService {
       msg = '请求资源不存在';
       console.error(msg+'，请检查路径是否正确');
     }
-    // this.commonUtil.toast_position(msg,'bottom'); //由这里统一处理error,不需要每次都catch
+    layer.msg('发生错误'); // 由这里统一处理error,不需要每次都catch
     console.log(error,msg);
-    return {retcode: -1, msg: msg};
   }
 
   // http请求时对body数据的处理
