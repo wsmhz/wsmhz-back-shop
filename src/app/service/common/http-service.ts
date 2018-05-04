@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
 import {HttpClient,HttpHeaders,} from '@angular/common/http';
 import {CommonUtil} from '../../utils/commonUtil';
+import {CommonConfig} from '../../config/commonConfig';
 declare var $: any;
 declare var layer: any;
 
 @Injectable()
-export class HttpServiceService {
+export class HttpService {
 
   constructor(
     private http: HttpClient,
-    private commonUtil: CommonUtil
+    private commonUtil: CommonUtil,
+    private commonConfig:CommonConfig
   ) { }
 
   HttpPost(url: string ,requestData: any,header?: HttpHeaders) {
@@ -33,12 +35,11 @@ export class HttpServiceService {
   }
 
   private handleSuccess(result) {
-    if (result && (result.status !== CommonUtil.RESPONSE_CODE.SUCCESS)) { // 由这里统一处理请求返回数据失败的情况
+    if (result && (result.status !== this.commonConfig.RESPONSE_CODE.SUCCESS)) { // 由这里统一处理请求返回数据失败的情况
       layer.msg('玩命提示中');
     }
-    if (result && (result.code === CommonUtil.RESPONSE_CODE.NEED_LOGIN)) {
+    if (result && (result.code === this.commonConfig.RESPONSE_CODE.NEED_LOGIN)) {
       // this.events.publish('needLogin');
-      layer.msg('需要登陆');
     }
     return result;
   }
