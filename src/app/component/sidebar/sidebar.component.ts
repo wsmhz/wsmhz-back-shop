@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {HttpService} from '../../service/common/http-service';
+import {CommonUtil} from '../../utils/commonUtil';
+import {CommonConfig} from '../../config/commonConfig';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -11,15 +14,27 @@ import {HttpService} from '../../service/common/http-service';
 })
 export class SidebarComponent implements OnInit {
 
+  adminInfo = this.commonUtil.getAdminInfo();
+  menus = [];
   constructor(
-    private httpService:HttpService
-  ) { }
+    private httpService:HttpService,
+    private commonUtil:CommonUtil,
+    private commonConfig:CommonConfig
+  ) {}
 
   ngOnInit() {
-    this.httpService.HttpGet("111admin/11/resource")
+    this.load();
+  }
+
+  load(){
+    this.httpService.HttpGet("admin/"+this.adminInfo.id+"/resource")
       .then(res=>{
-        console.log(res);
+        if(res.status === this.commonConfig.RESPONSE_CODE.SUCCESS){
+          this.menus = res.data;
+        }
       });
   }
+
+
 
 }

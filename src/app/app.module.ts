@@ -8,10 +8,13 @@ import { LoginComponent } from './component/system/login/login.component';
 import { HomeComponent } from './component/home/home.component';
 import { CommonConfig } from './config/commonConfig';
 import { CommonUtil } from './utils/commonUtil';
-import {AppRoutingModule} from 'app/app-routing.module';
+import {AppRoutingModule} from './app-routing.module';
 import {HttpClientModule} from '@angular/common/http';
 import {HttpService} from './service/common/http-service';
-
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 @NgModule({
   declarations: [
 
@@ -26,13 +29,18 @@ import {HttpService} from './service/common/http-service';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [
     CommonConfig,
     CommonUtil,
-    HttpService
+    HttpService,
+    {provide: LocationStrategy, useClass: HashLocationStrategy}
   ],
   bootstrap: [AppComponent]
 })
