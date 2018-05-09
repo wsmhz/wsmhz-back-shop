@@ -1,45 +1,46 @@
 <!-- BEGIN SIDEBAR -->
-<div class="page-sidebar nav-collapse collapse">
-<!-- BEGIN SIDEBAR MENU -->
-<ul class="page-sidebar-menu">
-  <li>
-    <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
-    <div class="sidebar-toggler hidden-phone"></div>
-    <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
-  </li>
-  <li class="start active ">
-    <a href="index.html">
-      <i class="icon-home"></i>
-      <span class="title">主页</span>
-      <span class="selected"></span>
-    </a>
-  </li>
+<div class="page-sidebar-wrapper">
+  <div class="page-sidebar navbar-collapse collapse">
 
-  <li class="" *ngFor="let menu of menus">
-    <a href="javascript:;">
-      <i class="icon-briefcase"></i>
-      <span class="title">{{menu.name}}</span>
-      <span class="arrow "></span>
-    </a>
-    <ul class="sub-menu" *ngIf="menu.children !== ''">
-      <li *ngFor="let childMenu of menu.children">
-        <a href="javascript:;">
-          {{childMenu.name}}
+    <ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" style="padding-top: 20px">
+      <li class="sidebar-toggler-wrapper hide">
+        <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+        <div class="sidebar-toggler">
+          <span></span>
+        </div>
+        <!-- END SIDEBAR TOGGLER BUTTON -->
+      </li>
+
+      <li class="nav-item start active open">
+        <a href="javascript:;" class="nav-link nav-toggle">
+          <i class="icon-home"></i>
+          <span class="title">主页</span>
+          <span class="selected"></span>
+          <span class="arrow open"></span>
+        </a>
+      </li>
+      <li class="nav-item" *ngFor="let menu of menus">
+        <a href="javascript:;" class="nav-link nav-toggle">
+          <i class="icon-diamond"></i>
+          <span class="title">{{menu.name}}</span>
           <span class="arrow"></span>
         </a>
-        <ul class="sub-menu" *ngIf="childMenu.children !== ''">
-          <li *ngFor="let childChildMenu of childMenu.children">
-            <a href="javascript:;">
-              <i class="icon-group"></i>
-              {{childChildMenu.name}}
+        <ul class="sub-menu" *ngIf="menu.children !== ''">
+          <li class="nav-item" *ngFor="let childMenu of menu.children">
+            <a href="javascript:;" class="nav-link nav-toggle">
+              <span class="title">{{childMenu.name}}</span>
+              <span class="arrow"></span>
             </a>
+            <ul class="sub-menu" *ngIf="childMenu.children !== ''">
+              <li class="nav-item" *ngFor="let childChildMenu of childMenu.children">
+                <a class="nav-link ">{{childChildMenu.name}}</a>
+              </li>
+            </ul>
           </li>
         </ul>
       </li>
     </ul>
-
-  </li>
-</ul>
-<!-- END SIDEBAR MENU -->
+  </div>
+  <!-- END SIDEBAR -->
 </div>
 <!-- END SIDEBAR -->

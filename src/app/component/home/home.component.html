@@ -1,7 +1,21 @@
-<body class="page-header-fixed">
+<body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white">
 <app-navbar></app-navbar>
+<!-- BEGIN CONTAINER -->
 <div class="page-container">
   <app-sidebar></app-sidebar>
-  <app-content></app-content>
+  <!-- BEGIN CONTENT -->
+  <div class="page-content-wrapper">
+    <app-content></app-content>
+  </div>
+  <!-- END CONTAINER -->
+  <!-- BEGIN FOOTER -->
+  <div class="page-footer">
+    <div class="page-footer-inner"> 2018 &copy; system by wsmhz.
+      <a href="https://gitee.com/wsmhz/"  target="_blank">wsmhz shop</a>
+    </div>
+    <div class="scroll-to-top">
+      <i class="icon-arrow-up"></i>
+    </div>
+  </div>
 </div>
 </body>
