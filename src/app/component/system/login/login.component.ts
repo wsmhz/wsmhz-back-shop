@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
         .then(res => {
           if(res.status === this.commonConfig.RESPONSE_CODE.SUCCESS){
             window.localStorage.setItem("admin",JSON.stringify(res.data));
-            this.router.navigate(['/home']});
+            this.router.navigate(['/home']);
           }
         });
       }

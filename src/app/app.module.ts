@@ -15,6 +15,10 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
+import { HtmlPipe } from './pipe/html.pipe';
+import { AdminComponent } from './component/admin/admin.component';
+import { Code404Component } from './component/system/code404/code404/code404.component';
+import { WorkComponent } from './component/work/work.component';
 @NgModule({
   declarations: [
 
@@ -24,7 +28,11 @@ import {HashLocationStrategy, LocationStrategy} from '@angular/common';
     SidebarComponent,
     ContentComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    HtmlPipe,
+    AdminComponent,
+    Code404Component,
+    WorkComponent
 
   ],
   imports: [

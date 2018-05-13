@@ -27,7 +27,7 @@
         </a>
         <ul class="sub-menu" *ngIf="menu.children !== ''">
           <li class="nav-item" *ngFor="let childMenu of menu.children">
-            <a href="javascript:;" class="nav-link nav-toggle">
+            <a href="javascript:;" class="nav-link nav-toggle" [routerLink]=childMenu.url>
               <span class="title">{{childMenu.name}}</span>
               <span class="arrow"></span>
             </a>
