@@ -52,6 +52,7 @@ export class AdminComponent implements OnInit {
   status = true;// 查询字段
   title = '';
   adminForm: FormGroup;
+  pwdForm: FormGroup;
   admin = new Admin();
   constructor(
     private datePipe:DatePipe,
@@ -60,8 +61,12 @@ export class AdminComponent implements OnInit {
     private commonUtil : CommonUtil
   ) {
     this.adminForm = new FormBuilder().group({
-      username: ['', Validators.required],
-      password: ["", [Validators.required, Validators.minLength(6)]]
+      username: ['', Validators.required]
+    });
+    this.adminForm = new FormBuilder().group({
+      oldpassword: ['', Validators.required,Validators.minLength(6)],
+      newpassword: ['', Validators.required,Validators.minLength(6)],
+      repassword: ['', Validators.required,Validators.minLength(6)]
     });
   }
 
@@ -114,6 +119,15 @@ export class AdminComponent implements OnInit {
     }else{
       this.commonUtil.toastr_warning("请选取要编辑的数据行");
     }
+  }
+
+  pwd(){
+    this.admin = new Admin();
+    this.title = "修改密码";
+    $("#pwdModal").modal('show');
+  }
+
+  modifyPwd(){
 
   }
 
