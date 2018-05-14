@@ -19,11 +19,23 @@ export class AdminService {
   insert(admin:Admin){
     return this.httpService.HttpPost("admin",admin);
   }
+
+  update(admin:Admin){
+    return this.httpService.HttpPut("admin",admin);
+  }
 }
 
 export class Admin{
-  public username;
-  public password;
-  public phone;
-  public email;
+  public username:String;
+  public password:String;
+  public phone:String;
+  public email:String;
+  public status = true;
+}
+
+export class AdminPwd{
+  public oldpassword:String;
+  public password:String;
+  public pconfirm:String;
+
 }

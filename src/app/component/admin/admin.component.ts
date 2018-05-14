@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {DatePipe} from '@angular/common';
 import {CommonConfig} from '../../config/commonConfig';
 import {CommonUtil} from '../../utils/commonUtil';
-import {Admin, AdminService} from '../../service/admin/admin.service';
+import {Admin, AdminPwd, AdminService} from '../../service/admin/admin.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {equalValidator} from '../../validators/validator';
 
 declare let $: any;
 @Component({
@@ -54,6 +55,8 @@ export class AdminComponent implements OnInit {
   adminForm: FormGroup;
   pwdForm: FormGroup;
   admin = new Admin();
+  adminPwd = new AdminPwd();
+  showpwd = false;
   constructor(
     private datePipe:DatePipe,
     private adminService : AdminService,
@@ -61,12 +64,15 @@ export class AdminComponent implements OnInit {
     private commonUtil : CommonUtil
   ) {
     this.adminForm = new FormBuilder().group({
-      username: ['', Validators.required]
+      username: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(6)]]
     });
-    this.adminForm = new FormBuilder().group({
-      oldpassword: ['', Validators.required,Validators.minLength(6)],
-      newpassword: ['', Validators.required,Validators.minLength(6)],
-      repassword: ['', Validators.required,Validators.minLength(6)]
+    this.pwdForm = new FormBuilder().group({
+      oldpassword: ['', [Validators.required,Validators.minLength(6)]],
+      passwordsGroup: new FormBuilder().group({
+        password: ['', [Validators.required,Validators.minLength(6)]],
+        pconfirm: ['']
+      }, {validator: equalValidator})
     });
   }
 
@@ -102,10 +108,12 @@ export class AdminComponent implements OnInit {
   add(){
     this.admin = new Admin();
     this.title = "新建管理员";
+    this.showpwd = true;
     $("#adminModal").modal('show');
   }
 
   edit(){
+    this.showpwd = false;
     let selectRow= $('#dataTable').bootstrapTable('getSelections');
     if( selectRow.length !== 0){
         this.adminService.select(selectRow[0].id)
@@ -121,6 +129,30 @@ export class AdminComponent implements OnInit {
     }
   }
 
+  save(){
+    let flag = this.adminForm.valid;
+    if( ! this.showpwd){ // 编辑
+        if(this.adminForm.get("username").valid){
+          this.admin.password = null;
+          this.adminService.update(this.admin)
+            .then(res => {
+              if(res.status === this.commonConfig.RESPONSE_CODE.SUCCESS){
+                $("#adminModal").modal('hide');
+              }
+            });
+          return;
+        }
+    }
+    if (flag) {// 新增
+      this.adminService.insert(this.admin)
+        .then(res => {
+          if(res.status === this.commonConfig.RESPONSE_CODE.SUCCESS){
+            $("#adminModal").modal('hide');
+          }
+        });
+    }
+  }
+
   pwd(){
     this.admin = new Admin();
     this.title = "修改密码";
@@ -129,17 +161,6 @@ export class AdminComponent implements OnInit {
 
   modifyPwd(){
 
-  }
-
-  save(){
-    if (this.adminForm.valid) {
-      this.adminService.insert(this.admin)
-        .then(res => {
-          if(res.status === this.commonConfig.RESPONSE_CODE.SUCCESS){
-            $("#adminModal").modal('hide');
-          }
-        });
-    }
   }
 
   viewHandler(event:number){

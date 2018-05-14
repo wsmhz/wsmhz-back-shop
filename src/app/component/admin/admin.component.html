@@ -49,6 +49,25 @@
               账号不能为空
             </span>
           <br>
+          <div class="input-group" *ngIf="showpwd===true" [class.has-error]="adminForm.get('password').touched && (adminForm.hasError('minlength','password') || adminForm.hasError('required','password'))">
+            <span class="input-group-addon">密码:</span>
+            <input type="password" class="form-control" formControlName="password" [(ngModel)]="admin.password">
+          </div>
+          <span class="help-block" [class.hidden]="adminForm.get('password').untouched || !adminForm.hasError('required','password')">
+              密码不能为空
+            </span>
+          <span class="help-block" [class.hidden]="adminForm.get('password').untouched || !adminForm.hasError('minlength','password')">
+              请至少输入6位数
+          </span>
+          <br *ngIf="showpwd===true">
+          <div class="input-group">
+            <span class="input-group-addon">状态:</span>
+            <select class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="admin.status">
+              <option [value]="true">启用</option>
+              <option [value]="false">禁用</option>
+            </select>
+          </div>
+          <br>
           <div class="input-group">
             <span class="input-group-addon">手机号:</span>
             <input type="tel" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="admin.phone">
@@ -80,37 +99,37 @@
         <div class="modal-body">
           <div class="input-group" [class.has-error]="pwdForm.get('oldpassword').touched && (pwdForm.hasError('minlength','oldpassword') || pwdForm.hasError('required','oldpassword'))">
             <span class="input-group-addon">原密码:</span>
-            <input type="password" class="form-control" formControlName="oldpassword" [(ngModel)]="admin.password">
+            <input type="password" class="form-control" formControlName="oldpassword" [(ngModel)]="adminPwd.oldpassword">
           </div>
           <span class="help-block" [class.hidden]="pwdForm.get('oldpassword').untouched || !pwdForm.hasError('required','oldpassword')">
               原密码不能为空
             </span>
-          <span class="help-block" [class.hidden]="pwdForm.get('password').untouched || !pwdForm.hasError('minlength','password')">
+          <span class="help-block" [class.hidden]="pwdForm.get('oldpassword').untouched || !pwdForm.hasError('minlength','oldpassword')">
               请至少输入6位数
             </span>
           <br>
-          <div class="input-group" [class.has-error]="pwdForm.get('newpassword').touched && (pwdForm.hasError('minlength','newpassword') || pwdForm.hasError('required','newpassword'))">
-            <span class="input-group-addon">新密码:</span>
-            <input type="password" class="form-control" formControlName="newpassword" [(ngModel)]="admin.password">
-          </div>
-          <span class="help-block" [class.hidden]="pwdForm.get('newpassword').untouched || !pwdForm.hasError('required','newpassword')">
+
+          <div formGroupName="passwordsGroup">
+            <div class="input-group" [class.has-error]="pwdForm.get(['passwordsGroup','password']).touched && (pwdForm.hasError('minlength',['passwordsGroup','password']) || pwdForm.hasError('required',['passwordsGroup','password']))">
+              <span class="input-group-addon">新密码:</span>
+              <input type="password" class="form-control" formControlName="password" [(ngModel)]="adminPwd.password">
+            </div>
+            <span class="help-block" [class.hidden]="pwdForm.get(['passwordsGroup','password']).untouched || !pwdForm.hasError('required',['passwordsGroup','password'])">
               新密码不能为空
             </span>
-          <span class="help-block" [class.hidden]="pwdForm.get('newpassword').untouched || !pwdForm.hasError('minlength','newpassword')">
+            <span class="help-block" [class.hidden]="pwdForm.get(['passwordsGroup','password']).untouched || !pwdForm.hasError('minlength',['passwordsGroup','password'])">
               请至少输入6位数
             </span>
-          <br>
-          <div class="input-group" [class.has-error]="pwdForm.get('repassword').touched && (pwdForm.hasError('minlength','repassword') || pwdForm.hasError('required','repassword'))">
-            <span class="input-group-addon">确认密码:</span>
-            <input type="password" class="form-control" formControlName="repassword" [(ngModel)]="admin.password">
+            <br>
+            <div class="input-group" [class.has-error]="pwdForm.get('passwordsGroup').touched && pwdForm.hasError('equal', 'passwordsGroup')">
+              <span class="input-group-addon">确认密码:</span>
+              <input type="password" class="form-control" formControlName="pconfirm" [(ngModel)]="adminPwd.pconfirm">
+            </div>
+            <div [hidden]="!pwdForm.hasError('equal', 'passwordsGroup')">
+              {{pwdForm.getError('equal', 'passwordsGroup')?.description}}
+            </div>
           </div>
-          <span class="help-block" [class.hidden]="pwdForm.get('repassword').untouched || !pwdForm.hasError('required','repassword')">
-              确认密码不能为空
-            </span>
-          <span class="help-block" [class.hidden]="pwdForm.get('repassword').untouched || !pwdForm.hasError('minlength','repassword')">
-              请至少输入6位数
-            </span>
-          <br>
+
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary">提交</button>
