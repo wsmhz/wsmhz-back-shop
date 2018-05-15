@@ -27,6 +27,7 @@ export class AdminService {
   modifyPwd(adminPwd:AdminPwd,id:number){
     return this.httpService.HttpPut("admin/"+id,adminPwd,this.httpService.formHeader);
   }
+
 }
 
 export class Admin{
