@@ -10,11 +10,11 @@ export class LoginService {
   ) { }
 
   login(username:string,password:string,imageCode:string){
-    return this.httpService.HttpPostFormData('login',{
+    return this.httpService.HttpPost('login',{
       username:username,
       password:password,
       imageCode:imageCode
-    });
+    },this.httpService.formHeader);
   }
 
   logout(){

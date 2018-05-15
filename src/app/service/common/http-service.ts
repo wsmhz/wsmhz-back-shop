@@ -17,18 +17,19 @@ export class HttpService {
     private router: Router
   ) { }
 
-  HttpPost(url: string ,requestData: any) {
-    return this.http.post(url,JSON.stringify(requestData),{headers:this.jsonHeader})
-      .toPromise()
-      .then(res => this.handleSuccess((res)))
-      .catch(error => this.handleError(error));
-  }
-
-  HttpPostFormData(url: string ,requestData: any) {
-    return this.http.post(url,$.param(requestData),{headers:this.formHeader})
-      .toPromise()
-      .then(res => this.handleSuccess((res)))
-      .catch(error => this.handleError(error));
+  HttpPost(url: string ,requestData: any,header?:HttpHeaders) {
+    if(this.commonUtil.isNull(header)){
+      header = this.jsonHeader;
+      return this.http.post(url,JSON.stringify(requestData),{headers:header})
+        .toPromise()
+        .then(res => this.handleSuccess((res)))
+        .catch(error => this.handleError(error));
+    }else{
+      return this.http.post(url,$.param(requestData),{headers:header})
+        .toPromise()
+        .then(res => this.handleSuccess((res)))
+        .catch(error => this.handleError(error));
+    }
   }
 
   HttpGet(url: string) {
@@ -45,11 +46,19 @@ export class HttpService {
       .catch(error => this.handleError(error));
   }
 
-  HttpPut(url: string ,requestData: any) {
-    return this.http.put(url,JSON.stringify(requestData),{headers:this.jsonHeader})
-      .toPromise()
-      .then(res => this.handleSuccess((res)))
-      .catch(error => this.handleError(error));
+  HttpPut(url: string ,requestData: any,header?:HttpHeaders) {
+    if(this.commonUtil.isNull(header)){
+      header = this.jsonHeader;
+      return this.http.put(url,JSON.stringify(requestData),{headers:header})
+        .toPromise()
+        .then(res => this.handleSuccess((res)))
+        .catch(error => this.handleError(error));
+    }else{
+      return this.http.put(url,$.param(requestData),{headers:header})
+        .toPromise()
+        .then(res => this.handleSuccess((res)))
+        .catch(error => this.handleError(error));
+    }
   }
 
   private handleSuccess(result) {

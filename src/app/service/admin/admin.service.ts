@@ -23,9 +23,14 @@ export class AdminService {
   update(admin:Admin){
     return this.httpService.HttpPut("admin",admin);
   }
+
+  modifyPwd(adminPwd:AdminPwd,id:number){
+    return this.httpService.HttpPut("admin/"+id,adminPwd,this.httpService.formHeader);
+  }
 }
 
 export class Admin{
+  public id:number;
   public username:String;
   public password:String;
   public phone:String;

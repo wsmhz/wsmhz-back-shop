@@ -19,6 +19,7 @@ import { HtmlPipe } from './pipe/html.pipe';
 import { AdminComponent } from './component/admin/admin.component';
 import { Code404Component } from './component/system/code404/code404/code404.component';
 import { WorkComponent } from './component/work/work.component';
+import { AdminDetailComponent } from './component/admin/admin-detail/admin-detail.component';
 @NgModule({
   declarations: [
 
@@ -32,7 +33,8 @@ import { WorkComponent } from './component/work/work.component';
     HtmlPipe,
     AdminComponent,
     Code404Component,
-    WorkComponent
+    WorkComponent,
+    AdminDetailComponent
 
   ],
   imports: [

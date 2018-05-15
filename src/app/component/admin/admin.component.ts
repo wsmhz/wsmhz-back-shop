@@ -5,6 +5,8 @@ import {CommonUtil} from '../../utils/commonUtil';
 import {Admin, AdminPwd, AdminService} from '../../service/admin/admin.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {equalValidator} from '../../validators/validator';
+import {tableRefresh, tableSelectRow} from '../../utils/functions/functionUtil';
+import {Router} from '@angular/router';
 
 declare let $: any;
 @Component({
@@ -61,7 +63,8 @@ export class AdminComponent implements OnInit {
     private datePipe:DatePipe,
     private adminService : AdminService,
     private commonConfig : CommonConfig,
-    private commonUtil : CommonUtil
+    private commonUtil : CommonUtil,
+    private router:Router
   ) {
     this.adminForm = new FormBuilder().group({
       username: ['', Validators.required],
@@ -76,9 +79,7 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   search(){
     $('#dataTable').bootstrapTable('refresh',{
@@ -90,13 +91,13 @@ export class AdminComponent implements OnInit {
   }
 
   delete(){
-    let selectRow= $('#dataTable').bootstrapTable('getSelections');
+    let selectRow= tableSelectRow();
     if( selectRow.length !== 0){
       if(window.confirm("确定要删除吗？")){
         this.adminService.delete(selectRow[0].id)
           .then(res => {
             if(res.status === this.commonConfig.RESPONSE_CODE.SUCCESS){
-              $('#dataTable').bootstrapTable('refresh');
+              tableRefresh();
             }
           });
       }
@@ -114,7 +115,7 @@ export class AdminComponent implements OnInit {
 
   edit(){
     this.showpwd = false;
-    let selectRow= $('#dataTable').bootstrapTable('getSelections');
+    let selectRow= tableSelectRow();
     if( selectRow.length !== 0){
         this.adminService.select(selectRow[0].id)
           .then(res => {
@@ -138,6 +139,7 @@ export class AdminComponent implements OnInit {
             .then(res => {
               if(res.status === this.commonConfig.RESPONSE_CODE.SUCCESS){
                 $("#adminModal").modal('hide');
+                tableRefresh();
               }
             });
           return;
@@ -148,6 +150,7 @@ export class AdminComponent implements OnInit {
         .then(res => {
           if(res.status === this.commonConfig.RESPONSE_CODE.SUCCESS){
             $("#adminModal").modal('hide');
+            tableRefresh();
           }
         });
     }
@@ -155,16 +158,30 @@ export class AdminComponent implements OnInit {
 
   pwd(){
     this.admin = new Admin();
-    this.title = "修改密码";
-    $("#pwdModal").modal('show');
+    this.adminPwd = new AdminPwd();
+    let selectRow= tableSelectRow();
+    if( selectRow.length !== 0){
+      this.admin.id = selectRow[0].id;
+      this.title = "修改密码";
+      $("#pwdModal").modal('show');
+    }else{
+      this.commonUtil.toastr_warning("请选取要编辑的数据行");
+    }
   }
 
   modifyPwd(){
-
+    if(this.pwdForm.valid){
+      this.adminService.modifyPwd(this.adminPwd,this.admin.id)
+        .then(res => {
+          if(res.status === this.commonConfig.RESPONSE_CODE.SUCCESS){
+            $("#pwdModal").modal('hide');
+          }
+        });
+    }
   }
 
-  viewHandler(event:number){
-    alert(event);
+  viewHandler(id:number){
+    this.router.navigate(['home/adminDetail'],{ queryParams: { "id": id } });
   }
 
 }
