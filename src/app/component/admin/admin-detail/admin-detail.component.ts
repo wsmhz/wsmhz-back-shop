@@ -4,28 +4,43 @@ import {RoleService} from '../../../service/role/role.service';
 import {tableRefresh} from '../../../utils/functions/functionUtil';
 import {CommonConfig} from '../../../config/commonConfig';
 import {ResourceService} from '../../../service/resource/resource.service';
+import {Admin, AdminService} from '../../../service/admin/admin.service';
+import {CommonUtil} from '../../../utils/commonUtil';
 declare let $:any;
 @Component({
   selector: 'app-admin-detail',
   templateUrl: './admin-detail.component.html',
   styleUrls: ['./admin-detail.component.css'],
   providers:[
+    AdminService,
     RoleService,
     ResourceService
   ]
 })
 export class AdminDetailComponent implements OnInit {
 
-  adminId :number;
+  admin = new Admin();
   constructor(
     private routerInfo:ActivatedRoute,
+    private adminService:AdminService,
     private roleService:RoleService,
     private resourceService:ResourceService,
-    private commonConfig:CommonConfig
+    private commonConfig:CommonConfig,
+    private commonUtil:CommonUtil
   ) {}
 
   ngOnInit() {
-    this.routerInfo.queryParams.subscribe((params) => this.adminId = params.id);
+    this.routerInfo.queryParams
+      .subscribe((params) => {
+        if( ! this.commonUtil.isNull(params.id)){
+          this.adminService.select(params.id)
+            .then(res => {
+              if(res.status === this.commonConfig.RESPONSE_CODE.SUCCESS){
+                this.admin = res.data;
+              }
+            });
+        }
+      });
     this.initRoleTree();
     this.initResourceTree();
   }

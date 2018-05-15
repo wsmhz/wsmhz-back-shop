@@ -181,7 +181,7 @@ export class AdminComponent implements OnInit {
   }
 
   viewHandler(id:number){
-    this.router.navigate(['home/adminDetail'],{ queryParams: { "id": id } });
+    this.router.navigate(['home/adminDetail'],{ queryParams: { "id": id} });
   }
 
 }
