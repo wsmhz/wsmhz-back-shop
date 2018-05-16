@@ -30,19 +30,17 @@ export class AdminDetailComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.routerInfo.queryParams
-      .subscribe((params) => {
-        if( ! this.commonUtil.isNull(params.id)){
-          this.adminService.select(params.id)
-            .then(res => {
-              if(res.status === this.commonConfig.RESPONSE_CODE.SUCCESS){
-                this.admin = res.data;
-              }
-            });
-        }
-      });
-    this.initRoleTree();
-    this.initResourceTree();
+    let id = this.routerInfo.snapshot.queryParams["id"];
+    if( ! this.commonUtil.isNull(id)){
+      this.adminService.select(id)
+        .then(res => {
+          if(res.status === this.commonConfig.RESPONSE_CODE.SUCCESS){
+            this.admin = res.data;
+            this.initRoleTree();
+            this.initResourceTree();
+          }
+        });
+    }
   }
 
   /*初始化角色组树*/
@@ -53,7 +51,8 @@ export class AdminDetailComponent implements OnInit {
           let role_setting = {
             check: {
               enable: true,
-              chkStyle: "checkbox"
+              idKey: "id",
+              chkStyle: "radio"
             },
             data : {
               simpleData : {
@@ -65,18 +64,21 @@ export class AdminDetailComponent implements OnInit {
               }
             },
             callback : {
-              onClick : function(event, treeId, treeNode) {
-                $.fn.zTree.getZTreeObj(treeId).checkNode(treeNode,true);
-                // selectmenu(event, treeId, treeNode);
+              onClick : (event, treeId, treeNode)=> {
+                this.selectResource(event, treeId, treeNode);
               },
-              onCheck: function(event, treeId, treeNode) {
-                // selectmenu(event, treeId, treeNode);
-              },
-              // onRightClick : RoleRightClick
+              onCheck: (event, treeId, treeNode)=> {
+               this.selectResource(event, treeId, treeNode);
+              }
             }
           };
           res.data.splice(0,0,{id:0,name:"角色组",open:true,"nocheck":true});
           $.fn.zTree.init($("#role"), role_setting, res.data);
+
+          for (let roleId of this.admin.roleIdList) {
+            let roleTree = $.fn.zTree.getZTreeObj("role");
+            roleTree.checkNode(roleTree.getNodeByParam("id",roleId),true);
+          }
         }
       });
   }
@@ -89,6 +91,7 @@ export class AdminDetailComponent implements OnInit {
             let menu_setting = {
               check: {
                 enable: true,
+                idKey: "id",
                 chkStyle: "checkbox"
               },
               data : {
@@ -105,18 +108,47 @@ export class AdminDetailComponent implements OnInit {
               },
               callback : {
                 onClick : function(event, treeId, treeNode) {
-                   $.fn.zTree.getZTreeObj(treeId).checkNode(treeNode,true);
+                   $.fn.zTree.getZTreeObj(treeId).checkNode(treeNode,true,true);
                    event.preventDefault();	// 阻止点击子菜单url跳转
-                },
-                // onRightClick : MenuRightClick
+                }
               }
             };
             $.fn.zTree.init($("#resource"), menu_setting, res.data).expandAll(true);
+
+            for (let resourceId of this.admin.resourceIdList) {
+              let resourceTree = $.fn.zTree.getZTreeObj("resource");
+              resourceTree.checkNode(resourceTree.getNodeByParam("id",resourceId),true,true);
+            }
         }
       });
   }
 
+  // 选中角色组显示对应的菜单
+  selectResource(event, treeId, treeNode) {
+    $.fn.zTree.getZTreeObj("role").checkNode(treeNode,true);
+      this.roleService.selectAllResourceByRole(treeNode.id)
+        .then(res => {
+        if(res.status === this.commonConfig.RESPONSE_CODE.SUCCESS){
+          let resourceTree = $.fn.zTree.getZTreeObj("resource");
+          resourceTree.checkAllNodes(false);
+          for (let resource of res.data) {
+            resourceTree.checkNode(resourceTree.getNodeByParam("id",resource.id), true,true);
+          }
+        }
+      });
+  }
 
+  assignRole(){
+    let roleTree = $.fn.zTree.getZTreeObj("role");
+    let nodes = roleTree.getSelectedNodes();
+    if(this.commonUtil.isNull(nodes)){
+      this.commonUtil.toastr_warning("未选中角色");
+    }else if(nodes[0].id === 0){
+      this.commonUtil.toastr_warning("无效的角色");
+    }else{
+
+    }
+  }
 
 
 

@@ -36,6 +36,8 @@ export class Admin{
   public password:String;
   public phone:String;
   public email:String;
+  public roleIdList :any;
+  public resourceIdList:Array<number>;
   public status = true;
 }
 

@@ -13,4 +13,8 @@ export class RoleService {
     return this.httpService.HttpGet("role");
   }
 
+  selectAllResourceByRole(id:number){
+    return this.httpService.HttpGet("role/"+id+"/resource");
+  }
+
 }
