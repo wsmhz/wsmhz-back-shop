@@ -110,6 +110,10 @@ export class AdminDetailComponent implements OnInit {
                 onClick : function(event, treeId, treeNode) {
                    $.fn.zTree.getZTreeObj(treeId).checkNode(treeNode,true,true);
                    event.preventDefault();	// 阻止点击子菜单url跳转
+                },
+                onCheck: (event, treeId, treeNode)=> {
+                  $.fn.zTree.getZTreeObj(treeId).checkNode(treeNode,true,true);
+                  event.preventDefault();	// 阻止点击子菜单url跳转
                 }
               }
             };
@@ -138,18 +142,41 @@ export class AdminDetailComponent implements OnInit {
       });
   }
 
-  assignRole(){
+  assignRoles() {
     let roleTree = $.fn.zTree.getZTreeObj("role");
-    let nodes = roleTree.getSelectedNodes();
-    if(this.commonUtil.isNull(nodes)){
+    let nodes = roleTree.getCheckedNodes();
+    if (nodes.length === 0) {
       this.commonUtil.toastr_warning("未选中角色");
-    }else if(nodes[0].id === 0){
+    } else if (nodes[0].id === 0) {
       this.commonUtil.toastr_warning("无效的角色");
-    }else{
-
+    } else {
+      let roleIds = "";
+      for (let i = 0; i < nodes.length; i++) {
+        i === nodes.length - 1 ? roleIds = nodes[i].id : roleIds = nodes[i].id + ",";
+      }
+      this.adminService.assignRoles(this.admin.id,roleIds);
     }
   }
 
-
+  assignResources(){
+    let roleTree = $.fn.zTree.getZTreeObj("role");
+    let roleNodes = roleTree.getCheckedNodes();
+    if (roleNodes.length !== 1) {
+      this.commonUtil.toastr_warning("请选中一位角色");
+      return;
+    }
+    let resourceTree = $.fn.zTree.getZTreeObj("resource");
+    let nodes = resourceTree.getCheckedNodes();
+    console.log(nodes);
+    if (nodes.length === 0) {
+      this.commonUtil.toastr_warning("未选中资源");
+    }else {
+      let resourceIds = "";
+      for (let i = 0; i < nodes.length; i++) {
+        i === nodes.length - 1 ? resourceIds = nodes[i].id : resourceIds = nodes[i].id + ",";
+      }
+      this.roleService.assignResources(roleNodes[0].id,resourceIds);
+    }
+  }
 
 }

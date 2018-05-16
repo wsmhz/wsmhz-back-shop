@@ -17,4 +17,10 @@ export class RoleService {
     return this.httpService.HttpGet("role/"+id+"/resource");
   }
 
+  assignResources(id:number,resourceIds:string){
+    return this.httpService.HttpPost("role/"+id+"/resource",{
+      resourceIds:resourceIds
+    },this.httpService.formHeader);
+  }
+
 }

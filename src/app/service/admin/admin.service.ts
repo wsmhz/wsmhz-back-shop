@@ -28,6 +28,13 @@ export class AdminService {
     return this.httpService.HttpPut("admin/"+id,adminPwd,this.httpService.formHeader);
   }
 
+  assignRoles(id:number,roleIds:string){
+    return this.httpService.HttpPost("admin/"+id+"/role",{
+      roleIds:roleIds
+    },this.httpService.formHeader);
+  }
+
+
 }
 
 export class Admin{
