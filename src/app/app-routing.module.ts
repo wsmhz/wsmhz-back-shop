@@ -7,6 +7,7 @@ import {WorkComponent} from './component/work/work.component';
 import {AdminComponent} from './component/admin/admin.component';
 import {AdminDetailComponent} from './component/admin/admin-detail/admin-detail.component';
 import {RoleComponent} from "./component/role/role.component";
+import {RoleDetailComponent} from "./component/role/role-detail/role-detail.component";
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -15,7 +16,8 @@ const routes: Routes = [
       {path: '', component : WorkComponent},
       {path: 'admin', component : AdminComponent},
       {path: 'adminDetail', component : AdminDetailComponent},
-      {path: 'role', component : RoleComponent}
+      {path: 'role', component : RoleComponent},
+      {path: 'roleDetail', component : RoleDetailComponent}
     ]},
   {path:"login",component:LoginComponent},
   {path: '**', component : Code404Component}
