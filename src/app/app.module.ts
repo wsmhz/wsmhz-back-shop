@@ -22,6 +22,7 @@ import { WorkComponent } from './component/work/work.component';
 import { AdminDetailComponent } from './component/admin/admin-detail/admin-detail.component';
 import { RoleComponent } from './component/role/role.component';
 import { RoleDetailComponent } from './component/role/role-detail/role-detail.component';
+import { ResourceComponent } from './component/resource/resource.component';
 @NgModule({
   declarations: [
 
@@ -38,7 +39,8 @@ import { RoleDetailComponent } from './component/role/role-detail/role-detail.co
     WorkComponent,
     AdminDetailComponent,
     RoleComponent,
-    RoleDetailComponent
+    RoleDetailComponent,
+    ResourceComponent
 
   ],
   imports: [

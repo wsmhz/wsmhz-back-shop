@@ -26,7 +26,7 @@
         </div>
         <div class="modal-body">
           <div class="input-group" [class.has-error]="roleForm.get('name').touched && roleForm.hasError('required','name')">
-            <span class="input-group-addon">账号:</span>
+            <span class="input-group-addon">名称:</span>
             <input type="text" class="form-control" formControlName="name" [(ngModel)]="role.name">
           </div>
           <span class="help-block" [class.hidden]="roleForm.get('name').untouched || !roleForm.hasError('required','name')">
