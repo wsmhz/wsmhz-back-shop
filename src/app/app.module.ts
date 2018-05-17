@@ -20,6 +20,8 @@ import { AdminComponent } from './component/admin/admin.component';
 import { Code404Component } from './component/system/code404/code404/code404.component';
 import { WorkComponent } from './component/work/work.component';
 import { AdminDetailComponent } from './component/admin/admin-detail/admin-detail.component';
+import { RoleComponent } from './component/role/role.component';
+import { RoleDetailComponent } from './component/role/role-detail/role-detail.component';
 @NgModule({
   declarations: [
 
@@ -34,7 +36,9 @@ import { AdminDetailComponent } from './component/admin/admin-detail/admin-detai
     AdminComponent,
     Code404Component,
     WorkComponent,
-    AdminDetailComponent
+    AdminDetailComponent,
+    RoleComponent,
+    RoleDetailComponent
 
   ],
   imports: [

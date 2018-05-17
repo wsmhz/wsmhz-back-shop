@@ -6,6 +6,7 @@ import {Code404Component} from './component/system/code404/code404/code404.compo
 import {WorkComponent} from './component/work/work.component';
 import {AdminComponent} from './component/admin/admin.component';
 import {AdminDetailComponent} from './component/admin/admin-detail/admin-detail.component';
+import {RoleComponent} from "./component/role/role.component";
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -13,7 +14,8 @@ const routes: Routes = [
     children:[
       {path: '', component : WorkComponent},
       {path: 'admin', component : AdminComponent},
-      {path: 'adminDetail', component : AdminDetailComponent}
+      {path: 'adminDetail', component : AdminDetailComponent},
+      {path: 'role', component : RoleComponent}
     ]},
   {path:"login",component:LoginComponent},
   {path: '**', component : Code404Component}

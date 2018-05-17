@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpService} from '../common/http-service';
 
 @Injectable()
@@ -8,7 +8,9 @@ export class RoleService {
     private httpService : HttpService
   ) { }
 
-
+  select(id:number){
+    return this.httpService.HttpGet("role/"+id);
+  }
   selectAllRole(){
     return this.httpService.HttpGet("role");
   }
@@ -23,4 +25,24 @@ export class RoleService {
     },this.httpService.formHeader);
   }
 
+  insert(role:Role){
+    return this.httpService.HttpPost("role",role);
+  }
+
+  update(role:Role){
+    return this.httpService.HttpPut("role",role);
+  }
+
+  delete(id:number){
+    return this.httpService.HttpDelete("role/"+id);
+  }
+
+}
+
+
+export class Role{
+  public id:number;
+  public name:string;
+  public description:string;
+  public parentId:number;
 }
