@@ -23,6 +23,7 @@ import { AdminDetailComponent } from './component/admin/admin-detail/admin-detai
 import { RoleComponent } from './component/role/role.component';
 import { RoleDetailComponent } from './component/role/role-detail/role-detail.component';
 import { ResourceComponent } from './component/resource/resource.component';
+import { ProductComponent } from './component/product/product.component';
 @NgModule({
   declarations: [
 
@@ -40,7 +41,8 @@ import { ResourceComponent } from './component/resource/resource.component';
     AdminDetailComponent,
     RoleComponent,
     RoleDetailComponent,
-    ResourceComponent
+    ResourceComponent,
+    ProductComponent
 
   ],
   imports: [

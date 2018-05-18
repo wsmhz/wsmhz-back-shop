@@ -9,6 +9,7 @@ import {AdminDetailComponent} from './component/admin/admin-detail/admin-detail.
 import {RoleComponent} from "./component/role/role.component";
 import {RoleDetailComponent} from "./component/role/role-detail/role-detail.component";
 import {ResourceComponent} from './component/resource/resource.component';
+import {ProductComponent} from "./component/product/product.component";
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -19,10 +20,12 @@ const routes: Routes = [
       {path: 'adminDetail', component : AdminDetailComponent},
       {path: 'role', component : RoleComponent},
       {path: 'roleDetail', component : RoleDetailComponent},
-      {path: 'resource', component : ResourceComponent}
+      {path: 'resource', component : ResourceComponent},
+
+      {path: 'product', component : ProductComponent},
+      {path: '**', component : Code404Component}
     ]},
-  {path:"login",component:LoginComponent},
-  {path: '**', component : Code404Component}
+  {path:"login",component:LoginComponent}
 ];
 
 @NgModule({

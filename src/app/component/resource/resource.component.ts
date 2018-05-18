@@ -75,7 +75,6 @@ export class ResourceComponent implements OnInit {
       .then(response => {
         if(response.status === this.commonConfig.RESPONSE_CODE.SUCCESS){
           this.resourceList = response.data;
-          console.log(this.resourceList);
         }
       });
   }

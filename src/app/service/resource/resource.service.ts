@@ -1,6 +1,5 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpService} from '../common/http-service';
-import {Role} from '../role/role.service';
 
 @Injectable()
 export class ResourceService {
