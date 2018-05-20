@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders,} from '@angular/common/http';
 import {CommonUtil} from '../../utils/commonUtil';
 import {CommonConfig} from '../../config/commonConfig';
 import {Router} from '@angular/router';
+
 declare var $:any;
 
 @Injectable()
@@ -10,12 +11,21 @@ export class HttpService {
 
   jsonHeader = new HttpHeaders({'Content-Type': 'application/json'});
   formHeader = new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded'});
+
   constructor(
     private http: HttpClient,
     private commonUtil: CommonUtil,
     private commonConfig:CommonConfig,
     private router: Router
   ) { }
+
+  HttpPostUpload(url: string ,requestData: any) {
+    return this.http.post(url,requestData)
+      .toPromise()
+      .then(res => this.handleSuccess((res)))
+      .catch(error => this.handleError(error));
+
+  }
 
   HttpPost(url: string ,requestData: any,header?:HttpHeaders) {
     if(this.commonUtil.isNull(header)){

@@ -10,6 +10,8 @@ import {RoleComponent} from "./component/role/role.component";
 import {RoleDetailComponent} from "./component/role/role-detail/role-detail.component";
 import {ResourceComponent} from './component/resource/resource.component';
 import {ProductComponent} from "./component/product/product.component";
+import {ProductDetailComponent} from './component/product/product-detail/product-detail.component';
+import {CategoryComponent} from './component/category/category.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -23,6 +25,9 @@ const routes: Routes = [
       {path: 'resource', component : ResourceComponent},
 
       {path: 'product', component : ProductComponent},
+      {path: 'productDetail', component : ProductDetailComponent},
+      {path: 'category', component : CategoryComponent},
+
       {path: '**', component : Code404Component}
     ]},
   {path:"login",component:LoginComponent}

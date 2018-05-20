@@ -1,43 +1,46 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {DatePipe} from '@angular/common';
-import {CommonConfig} from '../../config/commonConfig';
 import {Router} from '@angular/router';
+import {CommonConfig} from '../../config/commonConfig';
 import {CommonUtil} from '../../utils/commonUtil';
+import {DatePipe} from '@angular/common';
 import {tableRefresh, tableSelectRow} from '../../utils/functions/functionUtil';
-import {Resource, ResourceService} from '../../service/resource/resource.service';
+import {Category, CategoryService} from '../../service/category/category.service';
 
 declare var $:any;
 @Component({
-  selector: 'app-resource',
-  templateUrl: './resource.component.html',
-  styleUrls: ['./resource.component.css'],
+  selector: 'app-category',
+  templateUrl: './category.component.html',
+  styleUrls: ['./category.component.css'],
   providers:[
-    DatePipe,
-    ResourceService
+    CategoryService,
+    DatePipe
   ]
 })
-export class ResourceComponent implements OnInit {
-  url = "resource/page";
+export class CategoryComponent implements OnInit {
+  url = "manage/category/page";
   columns =  [{
     checkbox: true
   }, {
     field: 'name',
-    title: '资源名称',
+    title: '分类名称',
     align: 'center',
   }, {
-    field: 'url',
-    title: '资源链接',
+    field: 'status',
+    title: '状态',
     align: 'center',
+    formatter:value=>{
+      if(value === true){
+        return "启用";
+      }else{
+        return "禁用";
+      }
+    }
   }, {
-    field: 'icon',
-    title: '图标',
+    field: 'sortOrder',
+    title: '排序',
     align: 'center',
-  }, {
-    field: 'type',
-    title: '类型',
-    align: 'center',
-  }, {
+  },{
     field: 'createDate',
     title: '创建时间',
     align: 'center',
@@ -54,18 +57,18 @@ export class ResourceComponent implements OnInit {
   }];
 
   title = "";
-  resourceForm: FormGroup;
+  categoryForm: FormGroup;
+  category = new Category();
   insertFlag = true;
-  resource = new Resource();
-  resourceList = [];
+  categoryList = [];
   constructor(
     private datePipe:DatePipe,
     private commonConfig : CommonConfig,
     private commonUtil : CommonUtil,
     private router:Router,
-    private resourceService:ResourceService
+    private categoryService:CategoryService
   ) {
-    this.resourceForm = new FormBuilder().group({
+    this.categoryForm = new FormBuilder().group({
       name: ['', Validators.required]
     });
   }
@@ -73,11 +76,11 @@ export class ResourceComponent implements OnInit {
   ngOnInit() {
   }
 
-  getResourceList(){
-    this.resourceService.selectAllResource()
-      .then(response => {
-        if(response.status === this.commonConfig.RESPONSE_CODE.SUCCESS){
-          this.resourceList = response.data;
+  getCategoryList(){
+    this.categoryService.selectAll()
+      .then(res => {
+        if(res.status === this.commonConfig.RESPONSE_CODE.SUCCESS){
+          this.categoryList = res.data;
         }
       });
   }
@@ -86,7 +89,7 @@ export class ResourceComponent implements OnInit {
     let selectRow= tableSelectRow();
     if( selectRow.length !== 0){
       if(window.confirm("确定要删除吗？")){
-        this.resourceService.delete(selectRow[0].id)
+        this.categoryService.delete(selectRow[0].id)
           .then(res => {
             if(res.status === this.commonConfig.RESPONSE_CODE.SUCCESS){
               tableRefresh();
@@ -99,21 +102,21 @@ export class ResourceComponent implements OnInit {
   }
 
   save(){
-    let valid = this.resourceForm.valid;
+    let valid = this.categoryForm.valid;
     if(valid){
       if(this.insertFlag){// 新增
-        this.resourceService.insert(this.resource)
+        this.categoryService.insert(this.category)
           .then(res => {
             if(res.status === this.commonConfig.RESPONSE_CODE.SUCCESS){
-              $("#resourceModal").modal('hide');
+              $("#categoryModal").modal('hide');
               tableRefresh();
             }
           });
       }else{  // 编辑
-        this.resourceService.update(this.resource)
+        this.categoryService.update(this.category)
           .then(res => {
             if(res.status === this.commonConfig.RESPONSE_CODE.SUCCESS){
-              $("#resourceModal").modal('hide');
+              $("#categoryModal").modal('hide');
               tableRefresh();
             }
           });
@@ -122,24 +125,24 @@ export class ResourceComponent implements OnInit {
   }
 
   add(){
-    this.resource = new Resource();
-    this.title = "新建资源";
+    this.category = new Category();
+    this.title = "新建分类";
     this.insertFlag = true;
-    this.getResourceList();
-    $("#resourceModal").modal('show');
+    this.getCategoryList();
+    $("#categoryModal").modal('show');
   }
 
   edit(){
     let selectRow= tableSelectRow();
     if( selectRow.length !== 0){
-      this.resourceService.select(selectRow[0].id)
+      this.categoryService.select(selectRow[0].id)
         .then(res => {
           if(res.status === this.commonConfig.RESPONSE_CODE.SUCCESS){
-            this.resource = res.data;
-            this.title = "编辑资源";
+            this.category = res.data;
+            this.title = "编辑分类";
             this.insertFlag = false;
-            this.getResourceList();
-            $("#resourceModal").modal('show');
+            this.getCategoryList();
+            $("#categoryModal").modal('show');
           }
         });
     }else{

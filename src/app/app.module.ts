@@ -24,6 +24,8 @@ import { RoleComponent } from './component/role/role.component';
 import { RoleDetailComponent } from './component/role/role-detail/role-detail.component';
 import { ResourceComponent } from './component/resource/resource.component';
 import { ProductComponent } from './component/product/product.component';
+import { ProductDetailComponent } from './component/product/product-detail/product-detail.component';
+import { CategoryComponent } from './component/category/category.component';
 @NgModule({
   declarations: [
 
@@ -42,7 +44,9 @@ import { ProductComponent } from './component/product/product.component';
     RoleComponent,
     RoleDetailComponent,
     ResourceComponent,
-    ProductComponent
+    ProductComponent,
+    ProductDetailComponent,
+    CategoryComponent
 
   ],
   imports: [
