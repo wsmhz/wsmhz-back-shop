@@ -48,5 +48,5 @@ export class Product{
   public price:number;
   public stock:number;
   public status:any;
-  public flag:string;
+  public flag:String = "NORMAL";
 }
