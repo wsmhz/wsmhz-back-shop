@@ -1,0 +1,52 @@
+<body class="login">
+<!-- BEGIN LOGO -->
+<div class="logo">
+  <a>
+    <!--<img src="../assets/pages/img/logo-big.png" alt="" /> -->
+  </a>
+</div>
+<!-- END LOGO -->
+<!-- BEGIN LOGIN -->
+<div class="content">
+  <!-- BEGIN LOGIN FORM -->
+  <form class="login-form" [formGroup]="loginForm" (ngSubmit)="login()" novalidate>
+    <h3 class="form-title font-green">管理员登录</h3>
+    <div class="form-group" [class.has-error]="loginForm.get('username').touched && loginForm.hasError('required',['username'])">
+      <input formControlName="username" class="form-control form-control-solid placeholder-no-fix" placeholder="账号" type="text" autocomplete="off" />
+      <span class="help-block" [class.hidden]="loginForm.get('username').untouched || !loginForm.hasError('required',['username'])">
+            账号不能为空
+      </span>
+    </div>
+
+    <div class="form-group" [class.has-error]="loginForm.get('password').touched && (loginForm.hasError('minlength',['password']) || loginForm.hasError('required',['password']))">
+      <input formControlName="password"  class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="密码"/>
+      <span class="help-block" [class.hidden]="loginForm.get('password').untouched || !loginForm.hasError('required',['password'])">
+             密码不能为空
+      </span>
+      <span class="help-block" [class.hidden]="loginForm.get('password').untouched || !loginForm.hasError('minlength',['password'])">
+            请至少输入6位数
+      </span>
+    </div>
+
+    <div class="form-group" [class.has-error]="loginForm.get('imageCode').touched && loginForm.hasError('required',['imageCode'])">
+       <div style="position: relative">
+         <input formControlName="imageCode" style="width: 60%" class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="验证码"/>
+         <img src="/code/image" style="position: absolute;right: 10%;top: 15%;" alt="验证码" >
+         <span class="help-block" [class.hidden]="loginForm.get('imageCode').untouched || !loginForm.hasError('required',['imageCode'])">
+            验证码不能为空
+        </span>
+       </div>
+    </div>
+
+    <div class="form-actions">
+      <label class="rememberme check mt-checkbox mt-checkbox-outline">
+        <input type="checkbox" name="remember-me"/>记住我
+        <span></span>
+      </label>
+      <button type="submit" class="btn green uppercase" style="float: right">登录</button>
+    </div>
+  </form>
+  <!-- END LOGIN FORM -->
+</div>
+
+</body>

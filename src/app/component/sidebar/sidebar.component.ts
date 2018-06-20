@@ -1,0 +1,62 @@
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {HttpService} from '../../service/common/http-service';
+import {CommonUtil} from '../../utils/commonUtil';
+import {CommonConfig} from '../../config/commonConfig';
+import {ActivatedRoute, Params, Router} from '@angular/router';
+
+declare var $:any;
+@Component({
+  selector: 'app-sidebar',
+  templateUrl: './sidebar.component.html',
+  styleUrls: ['./sidebar.component.css'],
+  providers:[
+
+  ]
+})
+export class SidebarComponent implements OnInit {
+
+  adminInfo = this.commonUtil.getAdminInfo();
+  menus = [];
+  constructor(
+    private httpService:HttpService,
+    private commonUtil:CommonUtil,
+    private commonConfig:CommonConfig
+  ) {}
+
+  ngOnInit() {
+    this.load();
+  }
+
+  showSub(index:number){
+    let display = $(".sub"+index).css("display");
+    if(display === "none"){
+      $(".sub"+index).css("display","block");
+    }else{
+      $(".sub"+index).css("display","none");
+    }
+
+  }
+
+  showSubSub(index:number){
+    let display = $(".subsub"+index).css("display");
+    if(display === "none"){
+      $(".subsub"+index).css("display","block");
+    }else{
+      $(".subsub"+index).css("display","none");
+    }
+
+
+  }
+
+  load(){
+    this.httpService.HttpGet("admin/"+this.adminInfo.id+"/resource")
+      .then(res=>{
+        if(res.status === this.commonConfig.RESPONSE_CODE.SUCCESS){
+          this.menus = res.data;
+        }
+      });
+  }
+
+
+
+}

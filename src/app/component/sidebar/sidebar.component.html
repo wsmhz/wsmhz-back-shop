@@ -1,0 +1,46 @@
+<!-- BEGIN SIDEBAR -->
+<div class="page-sidebar-wrapper">
+  <div class="page-sidebar navbar-collapse collapse">
+
+    <ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" style="padding-top: 20px">
+      <li class="sidebar-toggler-wrapper hide">
+        <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+        <div class="sidebar-toggler">
+          <span></span>
+        </div>
+        <!-- END SIDEBAR TOGGLER BUTTON -->
+      </li>
+
+      <li class="nav-item start active open">
+        <a href="javascript:;" class="nav-link nav-toggle">
+          <i class="icon-home"></i>
+          <span class="title">主页</span>
+          <span class="selected"></span>
+          <span class="arrow open"></span>
+        </a>
+      </li>
+      <li class="nav-item" *ngFor="let menu of menus;let i=index;">
+        <a href="javascript:;" (click)="showSub(i)" class="nav-link nav-toggle">
+          <i class="icon-diamond"></i>
+          <span class="title">{{menu.name}}</span>
+          <span class="arrow"></span>
+        </a>
+        <ul class="sub-menu sub{{i}}" *ngIf="menu.children !== ''">
+          <li class="nav-item" *ngFor="let childMenu of menu.children;let j=index">
+            <a href="javascript:;" (click)="showSubSub(j)" class="nav-link nav-toggle" [routerLink]=childMenu.url>
+              <span class="title">{{childMenu.name}}</span>
+              <span class="arrow"></span>
+            </a>
+            <ul class="sub-menu subsub{{j}}" *ngIf="childMenu.children !== ''">
+              <li class="nav-item" *ngFor="let childChildMenu of childMenu.children">
+                <a class="nav-link ">{{childChildMenu.name}}</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <!-- END SIDEBAR -->
+</div>
+<!-- END SIDEBAR -->

@@ -1,0 +1,49 @@
+<app-content [url]="url" [columns]="columns" (clickId)="viewHandler($event)">
+  <div class="form-group">
+
+  </div>
+
+  <div id="toolbar" class="btn-group">
+    <button type="button" class="btn btn-primary" (click)="add()">
+      <span class="glyphicon glyphicon-plus"></span>新增
+    </button>
+    <button type="button" class="btn btn-info" (click)="edit()">
+      <span class="glyphicon glyphicon-pencil"></span>编辑
+    </button>
+    <button type="button" class="btn btn-danger" (click)="delete()">
+      <span class="glyphicon glyphicon-remove"></span>删除
+    </button>
+  </div>
+</app-content>
+<!-- 角色窗口 开始-->
+<div class="modal fade" id="roleModal">
+  <div class="modal-dialog">
+    <form [formGroup]="roleForm" (ngSubmit)="save()" novalidate>
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+          <h3 class="modal-title">{{title}}</h3>
+        </div>
+        <div class="modal-body">
+          <div class="input-group" [class.has-error]="roleForm.get('name').touched && roleForm.hasError('required',['name'])">
+            <span class="input-group-addon">名称:</span>
+            <input type="text" class="form-control" formControlName="name" [(ngModel)]="role.name">
+          </div>
+          <span class="help-block" [class.hidden]="roleForm.get('name').untouched || !roleForm.hasError('required',['name'])">
+            角色名称不能为空
+          </span>
+          <br>
+          <div class="input-group">
+            <span class="input-group-addon">描述:</span>
+            <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
+                   [(ngModel)]="role.description">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">提交</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

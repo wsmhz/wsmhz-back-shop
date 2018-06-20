@@ -1,0 +1,49 @@
+<app-content [url]="url" [columns]="columns" (clickId)="viewHandler($event)">
+  <div class="form-group">
+    <label class="control-label col-md-1">产品名称</label>
+    <div class="col-md-2">
+      <input type="text" class="form-control" [(ngModel)]="name">
+    </div>
+    <label class="control-label col-md-1">状态</label>
+    <div class="col-md-2">
+      <select class="form-control"  [(ngModel)]="status" >
+        <option value="ON_SALE">在售</option>
+        <option value="OFF_SALE">下架</option>
+      </select>
+    </div>
+    <label class="control-label col-md-1">分类</label>
+    <div class="col-md-2">
+      <select class="form-control"  [(ngModel)]="categoryId">
+        <option value="{{category.id}}" *ngFor="let category of categoryList">{{category.name}}</option>
+      </select>
+    </div>
+    <label class="control-label col-md-1">标识</label>
+    <div class="col-md-2">
+      <select class="form-control"  [(ngModel)]="flag" >
+        <option value="HOT">热销</option>
+        <option value="NORMAL">常规</option>
+      </select>
+    </div>
+
+    <div class="col-md-2" style="float: right">
+      <br>
+      <button type="button" class="btn btn-primary" (click)="search()">查询</button>
+    </div>
+  </div>
+
+  <div id="toolbar" class="btn-group">
+    <button type="button" class="btn btn-primary" (click)="add()">
+      <span class="glyphicon glyphicon-plus"></span>新增
+    </button>
+    <button type="button" class="btn btn-info" (click)="onSale()">
+      <span class="glyphicon glyphicon-pencil"></span>上架
+    </button>
+    <button type="button" class="btn btn-warning" (click)="offSale()">
+      <span class="glyphicon glyphicon-pencil"></span>下架
+    </button>
+    <button type="button" class="btn btn-danger" (click)="delete()">
+      <span class="glyphicon glyphicon-remove"></span>删除
+    </button>
+  </div>
+</app-content>
+
