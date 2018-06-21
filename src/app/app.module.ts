@@ -7,17 +7,18 @@ import {ToastrModule} from 'ngx-toastr';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {ShareModule} from './share.module';
 import {ContentComponent} from './component/content/content.component';
+import {Code404Component} from './component/system/code404/code404/code404.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    Code404Component,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot(),
-    ShareModule
+    ToastrModule.forRoot()
   ],
   providers: [
     {provide: LocationStrategy, useClass: HashLocationStrategy}

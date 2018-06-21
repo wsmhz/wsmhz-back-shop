@@ -133,7 +133,7 @@ export class ProductComponent implements OnInit {
   }
 
   add(){
-    this.router.navigate(['home/productDetail'],{queryParams:{"insertFlag":true}});
+    this.router.navigate(['home/product/productDetail'],{queryParams:{"insertFlag":true}});
   }
 
   onSale(){
@@ -165,7 +165,7 @@ export class ProductComponent implements OnInit {
   }
 
   viewHandler(id:number){
-    this.router.navigate(['home/productDetail'],{ queryParams: { "id": id,"insertFlag":false} });
+    this.router.navigate(['home/product/productDetail'],{ queryParams: { "id": id,"insertFlag":false} });
   }
 
   search(){

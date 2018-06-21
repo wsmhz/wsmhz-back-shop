@@ -9,6 +9,9 @@ import {ProductComponent} from '../product/product.component';
 import {ProductDetailComponent} from '../product/product-detail/product-detail.component';
 import {CategoryComponent} from '../category/category.component';
 import {Code404Component} from '../system/code404/code404/code404.component';
+import {ResourceModule} from '../resource/resource.module';
+import {ProductModule} from '../product/product.module';
+import {CategoryModule} from '../category/category.module';
 
 const homeRoute: Routes = [
   {path: '', component: HomeComponent,
@@ -16,13 +19,11 @@ const homeRoute: Routes = [
     {path: '', loadChildren:'../work/work.module#WorkModule'},
     {path: 'admin', loadChildren:'../admin/admin.module#AdminModule'},
     {path: 'role', loadChildren:'../role/role.module#RoleModule'},
-    {path: 'resource', component : ResourceComponent},
+    {path: 'resource', loadChildren:'../resource/resource.module#ResourceModule'},
 
-    {path: 'product', component : ProductComponent},
-    {path: 'productDetail', component : ProductDetailComponent},
-    {path: 'category', component : CategoryComponent},
+    {path: 'product', loadChildren : '../product/product.module#ProductModule'},
+    {path: 'category', loadChildren : '../category/category.module#CategoryModule'},
 
-    {path: '**', component : Code404Component}
   ]}
 
 ];

@@ -130,7 +130,7 @@ export class RoleComponent implements OnInit {
   }
 
   viewHandler(id:number){
-    this.router.navigate(['home/roleDetail'],{ queryParams: { "id": id} });
+    this.router.navigate(['home/role/roleDetail'],{ queryParams: { "id": id} });
   }
 
 }
