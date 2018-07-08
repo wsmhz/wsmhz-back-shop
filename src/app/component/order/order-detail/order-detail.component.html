@@ -1,0 +1,64 @@
+<button type="button" class="btn blue-madison" (click)="goBack()" >返回</button>
+<div class="row">
+  <div class="col-md-1 col-sm-1" style="font-size: 20px;"></div>
+  <div class="col-md-5 col-sm-11" style="font-size: 20px;">
+    <div class="info"><label>订单编号：</label><strong>{{orderVo.orderNo}}</strong></div>
+    <div class="info"><label>订单金额：</label><span class="orange">￥{{orderVo.payment}}</span></div>
+    <div class="info"><label>支付方式：</label><span>{{orderVo.paymentTypeDesc}}</span></div>
+    <div class="info"><label>订单运费：</label><span class="orange">￥{{orderVo.postage}}</span></div>
+    <div class="info"><label>订单状态：</label>
+      <strong *ngIf="orderVo.statusDesc !== '已付款'">{{orderVo.statusDesc}}</strong>
+      <button *ngIf="orderVo.statusDesc === '已付款'" class="btn btn-danger">立即发货</button>
+    </div>
+  </div>
+
+  <div class="col-md-6 col-sm-11">
+    <div class="portlet blue-hoki box">
+      <div class="portlet-title">
+        <div class="caption">
+          <i class="fa fa-cogs"></i>收货信息</div>
+      </div>
+      <div class="portlet-body">
+        <div class="row static-info">
+          <div class="col-md-5">收件人</div>
+          <div class="col-md-7">{{shipping.receiverName}}</div>
+        </div>
+        <div class="row static-info">
+          <div class="col-md-5">联系电话</div>
+          <div class="col-md-7">{{shipping.receiverMobile}}</div>
+        </div>
+        <div class="row static-info">
+          <div class="col-md-5">收货地址</div>
+          <div class="col-md-7">{{shipping.receiverProvince}}-{{shipping.receiverCity}}-{{shipping.receiverDistrict}}</div>
+        </div>
+        <div class="row static-info">
+          <div class="col-md-5">详细地址</div>
+          <div class="col-md-7">{{shipping.receiverAddress}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="portlet-body flip-scroll" style="margin-top: 20px;text-align: center;">
+  <table class="table table-bordered table-striped table-condensed flip-content">
+    <thead class="flip-content">
+    <tr>
+      <th width="20%">商品名称</th>
+      <th> 商品图片 </th>
+      <th> 商品单价 </th>
+      <th> 商品数量 </th>
+      <th> 商品总价 </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of orderItemList">
+      <td>{{item.productName}}</td>
+      <td><img src="{{item.productImage}}" style="width: 100px;height: 100px;"></td>
+      <td>￥{{item.currentUnitPrice}}</td>
+      <td>{{item.quantity}}</td>
+      <td>￥{{item.totalPrice}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

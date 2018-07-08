@@ -38,23 +38,32 @@
             <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="resource.url">
           </div>
           <br>
-          <div class="input-group">
+          <div class="input-group" [class.has-error]="resourceForm.get('parentId').touched && resourceForm.hasError('required',['parentId'])">
             <span class="input-group-addon">父资源:</span>
-            <select class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="resource.parentId" >
+            <select formControlName="parentId" type="text" class="form-control"  [(ngModel)]="resource.parentId" >
               <option value="0">自身</option>
               <option value="{{res.id}}" *ngFor="let res of resourceList">{{res.name}}</option>
             </select>
           </div>
+            <span class="help-block" [class.hidden]="resourceForm.get('parentId').untouched || !resourceForm.hasError('required',['parentId'])">
+              父资源不能为空
+            </span>
           <br>
           <!--<div class="input-group">-->
             <!--<span class="input-group-addon">图标:</span>-->
             <!--<input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="resource.icon">-->
           <!--</div>-->
           <!--<br>-->
-          <div class="input-group">
+          <div class="input-group" [class.has-error]="resourceForm.get('type').touched && resourceForm.hasError('required',['type'])">
             <span class="input-group-addon">类型:</span>
-            <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="resource.type">
+            <select formControlName="type" type="text" class="form-control" [(ngModel)]="resource.type">
+              <option value="MENU">菜单</option>
+              <option value="LINK">链接</option>
+            </select>
           </div>
+            <span class="help-block" [class.hidden]="resourceForm.get('type').untouched || !resourceForm.hasError('required',['type'])">
+              资源类型不能为空
+            </span>
           <br>
           <div class="input-group">
             <span class="input-group-addon">排序:</span>

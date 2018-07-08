@@ -1,0 +1,31 @@
+<app-content [url]="url" [columns]="columns" (clickId)="viewHandler($event)">
+  <div class="form-group">
+    <label class="control-label col-md-1">订单编号</label>
+    <div class="col-md-2">
+      <input type="text" class="form-control" [(ngModel)]="orderNo">
+    </div>
+    <label class="control-label col-md-1">状态</label>
+    <div class="col-md-2">
+      <select class="form-control"  [(ngModel)]="status" >
+        <option value="">请选择</option>
+        <option value="CANCELED">已取消</option>
+        <option value="NO_PAY">未支付</option>
+        <option value="PAID">已付款</option>
+        <option value="SHIPPED">已发货</option>
+        <option value="ORDER_SUCCESS">订单完成</option>
+        <option value="ORDER_CLOSE">订单关闭</option>
+      </select>
+    </div>
+
+    <div class="col-md-2" style="float: right">
+      <br>
+      <button type="button" class="btn btn-primary" (click)="search()">查询</button>
+    </div>
+  </div>
+
+  <div id="toolbar" class="btn-group">
+    <button type="button" class="btn btn-danger" (click)="delete()">
+      <span class="glyphicon glyphicon-remove"></span>删除
+    </button>
+  </div>
+</app-content>

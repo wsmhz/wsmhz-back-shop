@@ -66,7 +66,9 @@ export class ResourceComponent implements OnInit {
     private resourceService:ResourceService
   ) {
     this.resourceForm = new FormBuilder().group({
-      name: ['', Validators.required]
+      name: ['', Validators.required],
+      parentId: ['', Validators.required],
+      type: ['', Validators.required],
     });
   }
 

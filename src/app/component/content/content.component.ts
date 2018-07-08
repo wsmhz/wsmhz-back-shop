@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AdminService} from '../../service/admin/admin.service';
 import {text} from '@angular/core/src/render3/instructions';
+import {CommonUtil} from '../../utils/commonUtil';
 
 declare let $: any;
 
@@ -23,7 +24,9 @@ export class ContentComponent implements OnInit {
   @Output()
   clickId:EventEmitter<number> = new EventEmitter();
 
-  constructor() { }
+  constructor(
+    private commonUtil:CommonUtil
+  ) { }
 
 
   ngOnInit() {
@@ -31,6 +34,8 @@ export class ContentComponent implements OnInit {
     $('#dataTable').bootstrapTable({
       url: this.url,                      //  请求后台的URL（*）
       method: 'get',                      // 请求方式（*）
+      dataType :'json',
+      contentType :'application/json',
       toolbar: '#toolbar',                // 工具按钮用哪个容器
       striped: true,                      // 是否显示行间隔色
       cache: false,                       // 是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
@@ -68,6 +73,9 @@ export class ContentComponent implements OnInit {
       detailView: false,                   // 是否显示父子表
       onClickRow:row=>{
         this.clickId.emit(row.id);
+      },
+      onLoadError: (status, res)=>{  // 加载失败时执行
+        this.commonUtil.toastr_error(JSON.parse(res.responseText).msg);
       },
       columns: this.columns
     });

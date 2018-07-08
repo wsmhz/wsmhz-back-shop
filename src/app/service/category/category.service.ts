@@ -32,7 +32,7 @@ export class CategoryService {
 
 export class Category{
   public id:number;
-  public parentId:number;
+  public parentId:Number = 0;
   public name:string;
   public status = true;
   public sortOrder:number;

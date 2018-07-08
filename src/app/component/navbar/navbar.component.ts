@@ -23,6 +23,9 @@ export class NavbarComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    if(this.commonUtil.isNull(this.adminInfo)){
+      this.router.navigate(['login']);
+    }
   }
 
   logout(){

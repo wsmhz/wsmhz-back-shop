@@ -35,6 +35,7 @@ export class ProductDetailComponent implements OnInit {
       subtitle: ['', Validators.required],
       price: ['', Validators.required],
       stock: ['', Validators.required],
+      categoryId: ['', Validators.required],
     });
   }
 

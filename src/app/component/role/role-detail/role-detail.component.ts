@@ -4,7 +4,7 @@ import {CommonConfig} from "../../../config/commonConfig";
 import {CommonUtil} from "../../../utils/commonUtil";
 import {RoleService} from "../../../service/role/role.service";
 import {ActivatedRoute} from "@angular/router";
-import {treeDeepSelect} from 'app/utils/functions/functionUtil';
+import {treeDeepSelect} from '../../../utils/functions/functionUtil';
 
 declare let $:any;
 @Component({
