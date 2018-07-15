@@ -24,6 +24,7 @@ const homeRoute: Routes = [
     {path: 'product', loadChildren : '../product/product.module#ProductModule'},
     {path: 'category', loadChildren : '../category/category.module#CategoryModule'},
     {path: 'order', loadChildren : '../order/order.module#OrderModule'},
+    {path: 'report', loadChildren : '../report/report.module#ReportModule'},
   ]}
 
 ];

@@ -9,32 +9,32 @@ export class RoleService {
   ) { }
 
   select(id:number){
-    return this.httpService.HttpGet("role/"+id);
+    return this.httpService.HttpGet("manage/role/"+id);
   }
   selectAllRole(){
-    return this.httpService.HttpGet("role");
+    return this.httpService.HttpGet("manage/role");
   }
 
   selectAllResourceByRole(id:number){
-    return this.httpService.HttpGet("role/"+id+"/resource");
+    return this.httpService.HttpGet("manage/role/"+id+"/resource");
   }
 
   assignResources(id:number,resourceIds:string){
-    return this.httpService.HttpPost("role/"+id+"/resource",{
+    return this.httpService.HttpPost("manage/role/"+id+"/resource",{
       resourceIds:resourceIds
     },this.httpService.formHeader);
   }
 
   insert(role:Role){
-    return this.httpService.HttpPost("role",role);
+    return this.httpService.HttpPost("manage/role",role);
   }
 
   update(role:Role){
-    return this.httpService.HttpPut("role",role);
+    return this.httpService.HttpPut("manage/role",role);
   }
 
   delete(id:number){
-    return this.httpService.HttpDelete("role/"+id);
+    return this.httpService.HttpDelete("manage/role/"+id);
   }
 
 }

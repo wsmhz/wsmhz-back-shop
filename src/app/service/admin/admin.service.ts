@@ -9,29 +9,33 @@ export class AdminService {
   ) { }
 
   delete(id:number){
-    return this.httpService.HttpDelete("admin/"+id);
+    return this.httpService.HttpDelete("manage/admin/"+id);
   }
 
   select(id:number){
-    return this.httpService.HttpGet("admin/"+id);
+    return this.httpService.HttpGet("manage/admin/"+id);
   }
 
   insert(admin:Admin){
-    return this.httpService.HttpPost("admin",admin);
+    return this.httpService.HttpPost("manage/admin",admin);
   }
 
   update(admin:Admin){
-    return this.httpService.HttpPut("admin",admin);
+    return this.httpService.HttpPut("manage/admin",admin);
   }
 
   modifyPwd(adminPwd:AdminPwd,id:number){
-    return this.httpService.HttpPut("admin/"+id,adminPwd,this.httpService.formHeader);
+    return this.httpService.HttpPut("manage/admin/"+id,adminPwd,this.httpService.formHeader);
   }
 
   assignRoles(id:number,roleIds:string){
-    return this.httpService.HttpPost("admin/"+id+"/role",{
+    return this.httpService.HttpPost("manage/admin/"+id+"/role",{
       roleIds:roleIds
     },this.httpService.formHeader);
+  }
+
+  loadMenuTree(id:number){
+    return this.httpService.HttpGet("manage/admin/"+id+"/resource");
   }
 
 

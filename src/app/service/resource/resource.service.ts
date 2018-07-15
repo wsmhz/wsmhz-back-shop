@@ -9,23 +9,23 @@ export class ResourceService {
   ) { }
 
   selectAllResource(){
-    return this.httpService.HttpGet("resource");
+    return this.httpService.HttpGet("manage/resource");
   }
 
   insert(resource:Resource){
-    return this.httpService.HttpPost("resource",resource);
+    return this.httpService.HttpPost("manage/resource",resource);
   }
 
   update(resource:Resource){
-    return this.httpService.HttpPut("resource",resource);
+    return this.httpService.HttpPut("manage/resource",resource);
   }
 
   delete(id:number){
-    return this.httpService.HttpDelete("resource/"+id);
+    return this.httpService.HttpDelete("manage/resource/"+id);
   }
 
   select(id:number){
-    return this.httpService.HttpGet("resource/"+id);
+    return this.httpService.HttpGet("manage/resource/"+id);
   }
 }
 

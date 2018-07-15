@@ -18,7 +18,7 @@ declare var $:any;
   ]
 })
 export class ResourceComponent implements OnInit {
-  url = "resource/page";
+  url = "manage/resource/page";
   columns =  [{
     checkbox: true
   }, {
@@ -36,7 +36,13 @@ export class ResourceComponent implements OnInit {
   }, {
     field: 'type',
     title: '类型',
-    align: 'center',
+    align: 'center',formatter:value=>{
+      if(value === "MENU"){
+        return "菜单";
+      }if(value === "LINK"){
+        return "链接";
+      }
+    },
   }, {
     field: 'createDate',
     title: '创建时间',

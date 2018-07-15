@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {RoleService} from '../../../service/role/role.service';
-import {tableRefresh} from '../../../utils/functions/functionUtil';
 import {CommonConfig} from '../../../config/commonConfig';
 import {ResourceService} from '../../../service/resource/resource.service';
 import {Admin, AdminService} from '../../../service/admin/admin.service';
 import {CommonUtil} from '../../../utils/commonUtil';
+
 declare let $:any;
 @Component({
   selector: 'app-admin-detail',

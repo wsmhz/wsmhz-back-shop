@@ -20,7 +20,7 @@ declare let $: any;
 })
 export class AdminComponent implements OnInit {
 
-  url = "admin/page";
+  url = "manage/admin/page";
   columns =  [{
     checkbox: true
   }, {

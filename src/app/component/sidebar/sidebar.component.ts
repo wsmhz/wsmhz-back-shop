@@ -3,6 +3,7 @@ import {HttpService} from '../../service/common/http-service';
 import {CommonUtil} from '../../utils/commonUtil';
 import {CommonConfig} from '../../config/commonConfig';
 import {ActivatedRoute, Params, Router} from '@angular/router';
+import {AdminService} from '../../service/admin/admin.service';
 
 declare var $:any;
 @Component({
@@ -10,7 +11,7 @@ declare var $:any;
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css'],
   providers:[
-
+    AdminService
   ]
 })
 export class SidebarComponent implements OnInit {
@@ -18,9 +19,9 @@ export class SidebarComponent implements OnInit {
   adminInfo = this.commonUtil.getAdminInfo();
   menus = [];
   constructor(
-    private httpService:HttpService,
     private commonUtil:CommonUtil,
-    private commonConfig:CommonConfig
+    private commonConfig:CommonConfig,
+    private adminService:AdminService
   ) {}
 
   ngOnInit() {
@@ -49,7 +50,7 @@ export class SidebarComponent implements OnInit {
   }
 
   load(){
-    this.httpService.HttpGet("admin/"+this.adminInfo.id+"/resource")
+    this.adminService.loadMenuTree(this.adminInfo.id)
       .then(res=>{
         if(res.status === this.commonConfig.RESPONSE_CODE.SUCCESS){
           this.menus = res.data;

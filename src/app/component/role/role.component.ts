@@ -18,7 +18,7 @@ declare var $:any;
   ]
 })
 export class RoleComponent implements OnInit {
-  url = "role/page";
+  url = "manage/role/page";
   columns =  [{
     checkbox: true
   }, {
