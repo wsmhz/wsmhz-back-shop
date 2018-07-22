@@ -10,7 +10,7 @@ export class LoginService {
   ) { }
 
   login(username:string,password:string,imageCode:string){
-    return this.httpService.HttpPost('login',{
+    return this.httpService.HttpPost('system/login',{
       username:username,
       password:password,
       imageCode:imageCode
@@ -18,7 +18,7 @@ export class LoginService {
   }
 
   logout(){
-    return this.httpService.HttpGet('logout');
+    return this.httpService.HttpGet('system/logout');
   }
 }
 
