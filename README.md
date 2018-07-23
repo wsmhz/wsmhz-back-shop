@@ -2,11 +2,13 @@
 
 #### 项目介绍
 
-shop管理后台-前端项目  
+
+
+### 前端项目-shop管理后台 
 
 网站网址[admin.wsmhz.cn](http://admin.wsmhz.cn)
 
-使用angular5.0构建
+使用Angular5.0构建
 
 集成插件：
 
