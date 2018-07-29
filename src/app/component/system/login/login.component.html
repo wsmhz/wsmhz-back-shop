@@ -2,7 +2,7 @@
 <!-- BEGIN LOGO -->
 <div class="logo">
   <a>
-    <!--<img src="../assets/pages/img/logo-big.png" alt="" /> -->
+    <img src="../../../../assets/layouts/layout/img/logo.png"  alt="logo" />
   </a>
 </div>
 <!-- END LOGO -->
@@ -31,7 +31,7 @@
     <div class="form-group" [class.has-error]="loginForm.get('imageCode').touched && loginForm.hasError('required',['imageCode'])">
        <div style="position: relative">
          <input formControlName="imageCode" style="width: 60%" class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="验证码"/>
-         <img src="system/code/image" style="position: absolute;right: 10%;top: 15%;" alt="验证码" >
+         <img [src]="codeImgSrc" style="position: absolute;right: 17%;top: 15%;" alt="验证码" ><a href="javaScript:" style="position: absolute;right: 1%;bottom: 30%;" (click)="changeCode()">换一个</a>
          <span class="help-block" [class.hidden]="loginForm.get('imageCode').untouched || !loginForm.hasError('required',['imageCode'])">
             验证码不能为空
         </span>

@@ -32,7 +32,7 @@ export class NavbarComponent implements OnInit {
     this.loginService.logout()
       .then(res=>{
         if(res.status === this.commonConfig.RESPONSE_CODE.SUCCESS){
-          window.localStorage.removeItem("admin");
+          localStorage.removeItem("admin");
           this.router.navigate(['login']);
         }
       });

@@ -68,10 +68,6 @@ export class RoleDetailComponent implements OnInit {
               onClick : function(event, treeId, treeNode) {
                 $.fn.zTree.getZTreeObj(treeId).checkNode(treeNode,true,true);
                 event.preventDefault();	// 阻止点击子菜单url跳转
-              },
-              onCheck: (event, treeId, treeNode)=> {
-                $.fn.zTree.getZTreeObj(treeId).checkNode(treeNode,true,true);
-                event.preventDefault();	// 阻止点击子菜单url跳转
               }
             }
           };

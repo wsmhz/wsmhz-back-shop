@@ -9,7 +9,7 @@ export class CommonUtil{
   ){}
 
   getAdminInfo(){
-    return JSON.parse(window.localStorage.getItem("admin"));
+    return JSON.parse(localStorage.getItem("admin"));
   }
 
   getDateFormatter(){

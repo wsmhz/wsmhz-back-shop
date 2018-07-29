@@ -66,10 +66,6 @@ export class AdminDetailComponent implements OnInit {
               onClick : (event, treeId, treeNode)=> {
                   $.fn.zTree.getZTreeObj(treeId).checkNode(treeNode,true);
                 // this.selectResource(event, treeId, treeNode);
-              },
-              onCheck: (event, treeId, treeNode)=> {
-                $.fn.zTree.getZTreeObj(treeId).checkNode(treeNode,true);
-                // this.selectResource(event, treeId, treeNode);
               }
             }
           };
