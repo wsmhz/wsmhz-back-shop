@@ -8,7 +8,7 @@
     <div class="info"><label>订单运费：</label><span class="orange">￥{{orderVo.postage}}</span></div>
     <div class="info"><label>订单状态：</label>
       <strong *ngIf="orderVo.statusDesc !== '已付款'">{{orderVo.statusDesc}}</strong>
-      <button *ngIf="orderVo.statusDesc === '已付款'" class="btn btn-danger">立即发货</button>
+      <button *ngIf="orderVo.statusDesc === '已付款'" (click)="shipment(orderVo.id,orderVo.orderNo)" class="btn btn-danger">立即发货</button>
     </div>
   </div>
 
