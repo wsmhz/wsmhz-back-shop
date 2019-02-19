@@ -16,4 +16,4 @@
          2.ztree
          3.toastr
          4.echart
-[java后端项目链接](https://gitee.com/wsmhz/wsmhz-web-shop)
+[java后端项目链接](https://github.com/wsmhz/wsmhz-web-shop)
