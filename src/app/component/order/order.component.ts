@@ -17,8 +17,8 @@ declare var $:any;
   ]
 })
 export class OrderComponent implements OnInit {
-
-  url = "manage/order/page";
+  servicePrefix = "order-service";
+  url =this.servicePrefix + "/manage/order/page";
   columns =  [{
     checkbox: true
   }, {

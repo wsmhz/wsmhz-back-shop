@@ -18,7 +18,8 @@ declare var $:any;
   ]
 })
 export class RoleComponent implements OnInit {
-  url = "manage/role/page";
+  servicePrefix = "oauth-service";
+  url =this.servicePrefix + "/manage/role/page";
   columns =  [{
     checkbox: true
   }, {

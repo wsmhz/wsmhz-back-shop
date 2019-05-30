@@ -1,7 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AdminService} from '../../service/admin/admin.service';
-import {text} from '@angular/core/src/render3/instructions';
 import {CommonUtil} from '../../utils/commonUtil';
+import {CommonConfig} from '../../config/commonConfig';
+import {Router} from '@angular/router';
 
 declare let $: any;
 
@@ -25,7 +26,9 @@ export class ContentComponent implements OnInit {
   clickId:EventEmitter<number> = new EventEmitter();
 
   constructor(
-    private commonUtil:CommonUtil
+    private commonUtil:CommonUtil,
+    private commonConfig:CommonConfig,
+    private router: Router
   ) { }
 
 
@@ -75,6 +78,12 @@ export class ContentComponent implements OnInit {
         this.clickId.emit(row.id);
       },
       onLoadError: (status, res)=>{  // 加载失败时执行
+        console.log(res.responseJSON);
+        if (res.status === 401 && res.responseJSON.status === this.commonConfig.RESPONSE_CODE.NEED_LOGIN) {
+          localStorage.removeItem("admin");
+          localStorage.removeItem("authorization");
+          this.router.navigate(["/login"]);
+        }
         this.commonUtil.toastr_error(JSON.parse(res.responseText).msg);
       },
       columns: this.columns

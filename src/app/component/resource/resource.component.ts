@@ -18,7 +18,8 @@ declare var $:any;
   ]
 })
 export class ResourceComponent implements OnInit {
-  url = "manage/resource/page";
+  servicePrefix = "oauth-service";
+  url =this.servicePrefix + "/manage/resource/page";
   columns =  [{
     checkbox: true
   }, {

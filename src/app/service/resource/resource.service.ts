@@ -4,28 +4,30 @@ import {HttpService} from '../common/http-service';
 @Injectable()
 export class ResourceService {
 
+  servicePrefix = "oauth-service";
+
   constructor(
     private httpService : HttpService
   ) { }
 
   selectAllResource(){
-    return this.httpService.HttpGet("manage/resource");
+    return this.httpService.HttpGet("manage/resource", this.servicePrefix);
   }
 
   insert(resource:Resource){
-    return this.httpService.HttpPost("manage/resource",resource);
+    return this.httpService.HttpPost("manage/resource",resource, null, this.servicePrefix);
   }
 
   update(resource:Resource){
-    return this.httpService.HttpPut("manage/resource",resource);
+    return this.httpService.HttpPut("manage/resource",resource, null, this.servicePrefix);
   }
 
   delete(id:number){
-    return this.httpService.HttpDelete("manage/resource/"+id);
+    return this.httpService.HttpDelete("manage/resource/"+id, this.servicePrefix);
   }
 
   select(id:number){
-    return this.httpService.HttpGet("manage/resource/"+id);
+    return this.httpService.HttpGet("manage/resource/"+id, this.servicePrefix);
   }
 }
 

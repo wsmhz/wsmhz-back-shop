@@ -4,28 +4,30 @@ import {HttpService} from '../common/http-service';
 @Injectable()
 export class CategoryService {
 
+  servicePrefix = "product-service";
+
   constructor(
     private httpService : HttpService
   ) { }
 
   insert(category:Category){
-    return this.httpService.HttpPost("manage/category",category);
+    return this.httpService.HttpPost("manage/category",category, null, this.servicePrefix);
   }
 
   update(category:Category){
-    return this.httpService.HttpPut("manage/category",category);
+    return this.httpService.HttpPut("manage/category",category, null, this.servicePrefix);
   }
 
   delete(id:number){
-    return this.httpService.HttpDelete("manage/category/"+id);
+    return this.httpService.HttpDelete("manage/category/"+id, this.servicePrefix);
   }
 
   select(id:number){
-    return this.httpService.HttpGet("manage/category/"+id);
+    return this.httpService.HttpGet("manage/category/"+id, this.servicePrefix);
   }
 
   selectAll(){
-    return this.httpService.HttpGet("manage/category");
+    return this.httpService.HttpGet("manage/category", this.servicePrefix);
   }
 
 }

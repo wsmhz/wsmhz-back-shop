@@ -20,7 +20,8 @@ declare let $: any;
 })
 export class AdminComponent implements OnInit {
 
-  url = "manage/admin/page";
+  servicePrefix = "oauth-service";
+  url =this.servicePrefix + "/manage/admin/page";
   columns =  [{
     checkbox: true
   }, {

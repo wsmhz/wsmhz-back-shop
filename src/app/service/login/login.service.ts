@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpService} from '../common/http-service';
-import {HttpHeaders} from '@angular/common/http';
 
 @Injectable()
 export class LoginService {
+
+  servicePrefix = "oauth-service";
 
   constructor(
     private httpService:HttpService
@@ -11,14 +12,19 @@ export class LoginService {
 
   login(username:string,password:string,imageCode:string){
     return this.httpService.HttpPost('system/login',{
-      username:username,
+      username:"admin_" + username,
       password:password,
-      imageCode:imageCode
-    },this.httpService.formHeader);
+      imageCode:imageCode,
+      deviceId: 'wsmhz'
+    },this.httpService.formHeader, this.servicePrefix);
   }
 
   logout(){
-    return this.httpService.HttpGet('system/logout');
+    return this.httpService.HttpGet('/logout', this.servicePrefix);
+  }
+
+  getAdminInfo(){
+    return this.httpService.HttpGet('/userInfo', this.servicePrefix);
   }
 }
 

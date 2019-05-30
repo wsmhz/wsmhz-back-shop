@@ -4,34 +4,36 @@ import {HttpService} from '../common/http-service';
 @Injectable()
 export class ProductService {
 
+  servicePrefix = "product-service";
+
   constructor(
     private httpService : HttpService
   ) { }
 
   insert(product:Product){
-    return this.httpService.HttpPost("manage/product",product);
+    return this.httpService.HttpPost("manage/product",product, null, this.servicePrefix);
   }
 
   update(product:Product){
-    return this.httpService.HttpPut("manage/product",product);
+    return this.httpService.HttpPut("manage/product",product, null, this.servicePrefix);
   }
 
   delete(id:number){
-    return this.httpService.HttpDelete("manage/product/"+id);
+    return this.httpService.HttpDelete("manage/product/"+id, this.servicePrefix);
   }
 
   select(id:number){
-    return this.httpService.HttpGet("manage/product/"+id);
+    return this.httpService.HttpGet("manage/product/"+id, this.servicePrefix);
   }
 
   deleteImg(file:string){
     return this.httpService.HttpPut("manage/product/file",{
       file:file
-    },this.httpService.formHeader);
+    },this.httpService.formHeader, this.servicePrefix);
   }
 
   upload(formData){
-    return this.httpService.HttpPostUpload("manage/product/file",formData);
+    return this.httpService.HttpPostUpload("manage/product/file",formData, this.servicePrefix);
   }
 
 

@@ -1,8 +1,5 @@
 {
-  "/manage":{
-    "target":"http://localhost:8098"
-  },
-  "/system":{
-    "target":"http://localhost:8098"
+  "/":{
+    "target":"http://144.34.244.17:8080"
   }
 }

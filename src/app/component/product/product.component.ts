@@ -19,7 +19,8 @@ declare var $:any;
   ]
 })
 export class ProductComponent implements OnInit {
-  url = "manage/product/page";
+  servicePrefix = "product-service";
+  url =this.servicePrefix + "/manage/product/page";
   columns =  [{
     checkbox: true
   }, {

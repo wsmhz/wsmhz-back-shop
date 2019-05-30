@@ -18,7 +18,8 @@ declare var $:any;
   ]
 })
 export class CategoryComponent implements OnInit {
-  url = "manage/category/page";
+  servicePrefix = "product-service";
+  url =this.servicePrefix + "/manage/category/page";
   columns =  [{
     checkbox: true
   }, {

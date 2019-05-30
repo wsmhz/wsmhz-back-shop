@@ -15,7 +15,7 @@ import {CommonConfig} from '../../../config/commonConfig';
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
-  codeImgSrc = "system/code/image";
+  codeImgSrc = "oauth-service/system/code/image?deviceId=wsmhz";
   constructor(
     private loginService: LoginService,
     private router: Router,
@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
   changeCode(){
     this.codeImgSrc = "";
     setTimeout(()=>{
-      this.codeImgSrc = "system/code/image";
+      this.codeImgSrc = "oauth-service/system/code/image?deviceId=wsmhz";
     },1);
   }
 
@@ -45,8 +45,23 @@ export class LoginComponent implements OnInit {
           if(res.status === this.commonConfig.RESPONSE_CODE.SUCCESS){
             if (typeof localStorage === 'object') {
               try {
-                localStorage.setItem("admin",JSON.stringify(res.data));
-                this.router.navigate(['/home']);
+                let curTime = new Date().getTime();
+                localStorage.setItem("authorization",JSON.stringify({
+                  access_token:res.data.access_token,
+                  token_type: res.data.token_type,
+                  refresh_token: res.data.refresh_token,
+                  scope: res.data.refresh_token,
+                  time:curTime
+                }));
+                this.loginService.getAdminInfo()
+                  .then(response => {
+                    if(res.status === this.commonConfig.RESPONSE_CODE.SUCCESS){
+                      localStorage.setItem("admin",JSON.stringify({admin:response.data,time:curTime}));
+                      this.router.navigate(['/home'],{queryParams:{loginFlag:true}});
+                    }
+                  }).catch(error=>{
+                  console.log(error, "获取用户信息失败");
+                });
               } catch (e) {
                 alert('您处于无痕浏览，无法为您保存信息，请关闭无痕模式后重新登陆');
               }

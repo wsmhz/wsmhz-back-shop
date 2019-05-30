@@ -19,7 +19,8 @@ export class HttpService {
     private router: Router
   ) { }
 
-  HttpPostUpload(url: string ,requestData: any) {
+  HttpPostUpload(url: string ,requestData: any,servicePrefix?: string) {
+    url = this.handlerUrl(servicePrefix, url);
     return this.http.post(url,requestData)
       .toPromise()
       .then(res => this.handleSuccess((res)))
@@ -27,14 +28,20 @@ export class HttpService {
 
   }
 
-  HttpPost(url: string ,requestData: any,header?:HttpHeaders) {
+  HttpPost(url: string ,requestData: any,header?:HttpHeaders, servicePrefix?: string) {
+    url = this.handlerUrl(servicePrefix, url);
     if(this.commonUtil.isNull(header)){
-      header = this.jsonHeader;
+      header = this.addAuthorization(this.jsonHeader);
       return this.http.post(url,JSON.stringify(requestData),{headers:header})
         .toPromise()
         .then(res => this.handleSuccess((res)))
         .catch(error => this.handleError(error));
     }else{
+      if(url !== "oauth-service/system/login"){
+        header = this.addAuthorization(header);
+      } else {
+        header = new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Basic d3NtaHo6d3NtaHpzZWNyZXQ='});
+      }
       return this.http.post(url,$.param(requestData),{headers:header})
         .toPromise()
         .then(res => this.handleSuccess((res)))
@@ -42,28 +49,34 @@ export class HttpService {
     }
   }
 
-  HttpGet(url: string) {
-    return this.http.get(url,{headers:this.formHeader})
+  HttpGet(url: string, servicePrefix?: string) {
+    url = this.handlerUrl(servicePrefix, url);
+    let header = this.addAuthorization(this.formHeader);
+    return this.http.get(url,{headers:header})
       .toPromise()
       .then(res => this.handleSuccess((res)))
       .catch(error => this.handleError(error));
   }
 
-  HttpDelete(url: string) {
-    return this.http.delete(url,{headers:this.formHeader})
+  HttpDelete(url: string, servicePrefix?: string) {
+    url = this.handlerUrl(servicePrefix, url);
+    let header = this.addAuthorization(this.formHeader);
+    return this.http.delete(url,{headers: header})
       .toPromise()
       .then(res => this.handleSuccess((res)))
       .catch(error => this.handleError(error));
   }
 
-  HttpPut(url: string ,requestData: any,header?:HttpHeaders) {
+  HttpPut(url: string ,requestData: any,header?:HttpHeaders, servicePrefix?: string) {
+    url = this.handlerUrl(servicePrefix, url);
     if(this.commonUtil.isNull(header)){
-      header = this.jsonHeader;
+      header = this.addAuthorization(this.jsonHeader);
       return this.http.put(url,JSON.stringify(requestData),{headers:header})
         .toPromise()
         .then(res => this.handleSuccess((res)))
         .catch(error => this.handleError(error));
     }else{
+      header = this.addAuthorization(header);
       return this.http.put(url,$.param(requestData),{headers:header})
         .toPromise()
         .then(res => this.handleSuccess((res)))
@@ -97,10 +110,31 @@ export class HttpService {
       msg = '请求超时,连接服务器异常';
     }
     if (errorResponse.status === 401 && errorResponse.error.status === this.commonConfig.RESPONSE_CODE.NEED_LOGIN) {
+      localStorage.removeItem("admin");
+      localStorage.removeItem("authorization");
       this.router.navigate(["/login"]);
     }
-      this.commonUtil.toastr_error(msg); // 由这里统一处理error,不需要每次都catch
+    this.commonUtil.toastr_error(msg); // 由这里统一处理error,不需要每次都catch
     console.log(errorResponse,msg);
+  }
+
+  private addAuthorization(header: HttpHeaders){
+    let authorization = this.commonUtil.getAuthorization();
+    if(this.commonUtil.isNull(authorization)){
+      return header;
+    }
+    return new HttpHeaders({'Content-Type': header.get('Content-Type'), 'Authorization': 'bearer ' + this.commonUtil.getAuthorization().access_token});
+  }
+
+  /**
+   * 该版为微服务架构，由于没有写一个统一业务平台，直接请求到中台服务网关
+   * 后续可直接替换为空字符
+   * */
+  private handlerUrl(servicePrefix: string, url: string){
+    if(this.commonUtil.isNull(servicePrefix)){
+      return url;
+    }
+    return servicePrefix + "/" + url;
   }
 
 }
